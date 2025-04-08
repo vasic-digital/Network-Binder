@@ -2,6 +2,10 @@
 
 Bind multiple internet connection endpoints into single one using the Multipath TCP (mptcp).
 
+## Project status
+
+Currently **UNDER THE DEVELOPMENT**.
+
 ## Project Structure
 
 ```
@@ -23,3 +27,21 @@ Bind multiple internet connection endpoints into single one using the Multipath 
 ├── README.md
 └── README.pdf                  # Will be generated
 ```
+
+## Deployment Workflow
+
+1. **Build and Start**:
+   ```bash
+   docker-compose build
+   docker-compose up -d
+   ```
+
+2. **Manual Trigger**:
+   ```bash
+   docker exec netplan-optimizer python netplan_optimizer.py
+   ```
+
+3. **View Logs**:
+   ```bash
+   docker logs -f netplan-optimizer
+   ```
