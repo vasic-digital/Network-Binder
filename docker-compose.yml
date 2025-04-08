@@ -5,8 +5,8 @@ services:
     build: .
     container_name: netplan-optimizer
     restart: unless-stopped
-    privileged: true  # Required for network access
-    network_mode: host  # Needs direct host network access
+    privileged: true      # Required for network access
+    network_mode: host    # Needs direct host network access
     volumes:
       - ./config/netplan:/etc/netplan
       - /var/lib/netplan_optimizer:/var/lib/netplan_optimizer
