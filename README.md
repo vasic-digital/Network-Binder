@@ -6,16 +6,20 @@ Bind multiple internet connection endpoints into single one using the Multipath 
 
 ```
 /root/
+|
+├── ...
 ├── docker-compose.yml
 ├── config/
 │   ├── netplan/
-│   │   └── 01-netcfg.yaml  # Will be generated
+│   │   └── 01-netcfg.yaml      # Will be generated
 │   ├── notifications.yaml
 │   └── benchmarks.yaml
 ├── scripts/
-│   ├── netplan_optimizer.py  # Main logic
+│   ├── netplan_optimizer.py    # Main logic
 │   └── entrypoint.sh
 ├── Dockerfile
-└── README.md
+├── ...
+├── LICENSE
+├── README.md
+└── README.pdf                  # Will be generated
 ```
-
