@@ -6,6 +6,10 @@ Bind multiple internet connection endpoints into single one using the Multipath 
 
 Currently **UNDER THE DEVELOPMENT**.
 
+### TODO
+
+- Replace / rebrand the `netplan-*` to `network-binder`.
+
 ## Project Structure
 
 ```
