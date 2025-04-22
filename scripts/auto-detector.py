@@ -20,9 +20,11 @@ if __name__ == "__main__":
             'renderer': 'networkd',
             'ethernets': {
                 wan: {
-                    'dhcp4': False,
-                    'addresses': [f'192.168.{idx+1}.100/24'],
-                    'routes': [{'to': '0.0.0.0/0', 'via': f'192.168.{idx+1}.1'}]
+                    'dhcp4': True,  # Use DHCP since ISPs use 192.168.0.X
+                    'dhcp4-overrides': {
+                        'route-metric': 100 + idx  # Different metric for each WAN
+                    },
+                    'optional': True
                 } for idx, wan in enumerate(wans)
             }
         }
