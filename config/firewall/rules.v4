@@ -1,0 +1,61 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+
+# ----- Base Rules -----
+# Allow established connections
+-A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+-A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# Loopback and ping
+-A INPUT -i lo -j ACCEPT
+-A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+
+# SSH access
+-A INPUT -p tcp --dport 22 -j ACCEPT
+
+# ----- qBittorrent Rules -----
+# WebUI access
+-A INPUT -p tcp --dport 8085 -j ACCEPT
+
+# Peer connections (adjust range as needed)
+-A INPUT -p tcp --match multiport --dports 6881:6891 -j ACCEPT
+-A INPUT -p udp --match multiport --dports 6881:6891 -j ACCEPT
+
+# DHT and uTP
+-A INPUT -p udp --dport 34197 -j ACCEPT  # Typical DHT port
+-A INPUT -p udp --dport 10000:60000 -j ACCEPT  # Broad UDP range for uTP
+
+# ----- JDownloader Rules -----
+# Remote API and WebUI
+-A INPUT -p tcp --match multiport --dports 3128,9666 -j ACCEPT
+
+# ----- Docker/MTPCP Rules -----
+# Container networking
+-A FORWARD -i docker0 -j ACCEPT
+-A FORWARD -o docker0 -j ACCEPT
+-A FORWARD -i br-+ -j ACCEPT
+-A FORWARD -o br-+ -j ACCEPT
+
+# MPTCP bonding
+-A FORWARD -i eth+ -o eth+ -j ACCEPT
+
+# ----- Rate Limiting for Security -----
+# Prevent brute force on qBittorrent WebUI
+-A INPUT -p tcp --dport 8085 -m connlimit --connlimit-above 5 --connlimit-mask 32 -j DROP
+-A INPUT -p tcp --dport 8085 -m recent --name qbt_webui --update --seconds 60 --hitcount 10 -j DROP
+-A INPUT -p tcp --dport 8085 -m recent --name qbt_webui --set
+
+# ----- Final Commit -----
+COMMIT
+
+*nat
+# MASQ for all outbound traffic
+-A POSTROUTING -o eth+ -j MASQUERADE
+
+# Port forwarding for qBittorrent (example)
+-A PREROUTING -i eth3 -p tcp --dport 6881 -j DNAT --to-destination 192.168.0.100:6881
+-A PREROUTING -i eth3 -p udp --dport 34197 -j DNAT --to-destination 192.168.0.100:34197
+
+COMMIT

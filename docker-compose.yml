@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mptcp-router:
+    build: .
+    privileged: true
+    network_mode: host
+    volumes:
+      - /etc/netplan:/etc/netplan
+      - /sys/class/net:/sys/class/net:ro
+      - /proc/net/dev:/proc/net/dev:ro
+      - ./config/mptcp:/etc/mptcp
+    environment:
+      - LAN_INTERFACE=eth3  # Your LAN-facing NIC
+    restart: unless-stopped
+
+  firewall:
+    image: alpine/iptables
+    network_mode: host
+    volumes:
+      - ./config/firewall:/etc/iptables
+    command: ["sh", "-c", "iptables-restore < /etc/iptables/rules.v4 && sleep infinity"]
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+
+  netmon:
+    image: nicolaka/netshoot
+    network_mode: host
+    command: ["sh", "-c", "while true; do iftop -i eth+; sleep 10; done"]
+    restart: unless-stopped
