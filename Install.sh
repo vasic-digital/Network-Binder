@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo apt update
-sudo apt install -y \
-    iptables-persistent netfilter-persistent \
-    iftop ethtool
+git fetch && git pull && sh DoInstall.sh
+
 
