@@ -12,44 +12,25 @@ Currently **UNDER THE DEVELOPMENT**.
 
 ### TODOs
 
-- Replace / rebrand the `netplan-*` to `network-binder`.
-
-## Project Structure
-
-```
-/root/
-|
-├── ...
-├── docker-compose.yml
-├── config/
-│   ├── netplan/
-│   │   └── 01-netcfg.yaml      # Will be generated
-│   ├── notifications.yaml
-│   └── benchmarks.yaml
-├── scripts/
-│   ├── netplan_optimizer.py    # Main logic
-│   └── entrypoint.sh
-├── Dockerfile
-├── ...
-├── LICENSE
-├── README.md
-└── README.pdf                  # Will be generated
-```
+- None.
 
 ## Deployment Workflow
 
 1. **Build and Start**:
+
    ```bash
    docker-compose build
    docker-compose up -d
    ```
 
 2. **Manual Trigger**:
+
    ```bash
    docker exec netplan-optimizer python netplan_optimizer.py
    ```
 
 3. **View Logs**:
+
    ```bash
    docker logs -f netplan-optimizer
    ```
@@ -57,6 +38,7 @@ Currently **UNDER THE DEVELOPMENT**.
 ## Firewall setup
 
 ### **1. Install and Enable iptables**
+
 ```bash
 sudo apt update
 sudo apt install -y iptables iptables-persistent
@@ -66,6 +48,7 @@ sudo systemctl enable netfilter-persistent
 ---
 
 ### **2. Basic Firewall Rules (Pre-Docker)**
+
 Create `/etc/iptables/rules.v4` with these **essential rules** that won't break Docker:
 
 ```bash
@@ -101,6 +84,7 @@ COMMIT
 ```
 
 Apply immediately:
+
 ```bash
 sudo iptables-restore < /etc/iptables/rules.v4
 ```
@@ -108,6 +92,7 @@ sudo iptables-restore < /etc/iptables/rules.v4
 ---
 
 ### **3. Docker-Compatible Rules**
+
 Add these **Docker-specific rules** to allow container networking:
 
 ```bash
@@ -125,6 +110,7 @@ sudo iptables -A FORWARD -p tcp -m multiport --dports 80,443 -j ACCEPT
 ---
 
 ### **4. Save Rules Permanently**
+
 ```bash
 sudo netfilter-persistent save
 sudo systemctl restart netfilter-persistent
@@ -133,6 +119,7 @@ sudo systemctl restart netfilter-persistent
 ---
 
 ### **5. Verify Setup**
+
 ```bash
 # Check rules
 sudo iptables -L -n -v --line-numbers
@@ -149,6 +136,7 @@ curl localhost
 ---
 
 ### **6. (Optional) ufw Alternative**
+
 If you prefer `ufw`:
 
 ```bash
@@ -177,6 +165,7 @@ sudo ufw enable
 ---
 
 ### **7. Critical MPTCP Firewall Rules**
+
 Add to `/etc/iptables/rules.v4` before `COMMIT`:
 
 ```bash
@@ -189,6 +178,7 @@ Add to `/etc/iptables/rules.v4` before `COMMIT`:
 ---
 
 ### **8. Final Checks**
+
 ```bash
 # Ensure rules persist after reboot
 sudo apt install iptables-persistent
@@ -201,6 +191,7 @@ docker run --rm curlimages/curl curl ifconfig.me
 ---
 
 ### **Firewall Rule Summary Table**
+
 | Rule | Purpose | Command |
 |------|---------|---------|
 | Docker NAT | Container internet access | `iptables -t nat -A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE` |
@@ -211,7 +202,9 @@ docker run --rm curlimages/curl curl ifconfig.me
 ---
 
 ### **Troubleshooting**
+
 If Docker breaks:
+
 ```bash
 # Reset to allow-all temporarily
 sudo iptables -P INPUT ACCEPT
