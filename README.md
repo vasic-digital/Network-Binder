@@ -21,6 +21,7 @@ Currently **UNDER THE DEVELOPMENT**.
 ### TODOs
 
 - `LAN_INTERFACE=eth3  # Your LAN-facing NIC` to be fully dynamic
+- Restart survival
 
 ## Project structure
 
