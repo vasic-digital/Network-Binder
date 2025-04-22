@@ -11,7 +11,7 @@ services:
       - /proc/net/dev:/proc/net/dev:ro
       - ./config/mptcp:/etc/mptcp
     environment:
-      - LAN_INTERFACE=eth3  # Your LAN-facing NIC
+      - LAN_INTERFACE=eth3  # TODO: Your LAN-facing NIC to be automatically configured
     restart: unless-stopped
 
   firewall:
