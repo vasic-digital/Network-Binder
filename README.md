@@ -20,7 +20,7 @@ Currently **UNDER THE DEVELOPMENT**.
 
 ### TODOs
 
-- None.
+- `LAN_INTERFACE=eth3  # Your LAN-facing NIC` to be fully dynamic
 
 ## Project structure
 
