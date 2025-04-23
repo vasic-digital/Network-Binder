@@ -18,11 +18,6 @@ Currently **UNDER THE DEVELOPMENT**.
 
 - Ubuntu Server 24.04.2 LTS
 
-### TODOs
-
-- `LAN_INTERFACE=eth3  # Your LAN-facing NIC` to be fully dynamic
-- Restart survival
-
 ## Project structure
 
 ```bash
@@ -39,3 +34,8 @@ Currently **UNDER THE DEVELOPMENT**.
 # │   └── firewall-setup.sh
 # └── README.md
 ```
+
+## TODOs
+
+- `LAN_INTERFACE=eth3  # Your LAN-facing NIC` to be fully dynamic
+- Restart survival
