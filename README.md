@@ -39,4 +39,3 @@ Currently **UNDER THE DEVELOPMENT**.
 # │   └── firewall-setup.sh
 # └── README.md
 ```
-
