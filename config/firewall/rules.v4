@@ -15,6 +15,19 @@
 # SSH access
 -A INPUT -p tcp --dport 22 -j ACCEPT
 
+# ----- Samba Rules -----
+# Allow NetBIOS Name Service (UDP/137)
+-A INPUT -p udp --dport 137 -j ACCEPT
+
+# Allow NetBIOS Datagram Service (UDP/138)
+-A INPUT -p udp --dport 138 -j ACCEPT
+
+# Allow NetBIOS Session Service (TCP/139)
+-A INPUT -p tcp --dport 139 -j ACCEPT
+
+# Allow Microsoft-DS (SMB over TCP/IP) (TCP/445)
+-A INPUT -p tcp --dport 445 -j ACCEPT
+
 # ----- qBittorrent Rules -----
 # WebUI access
 -A INPUT -p tcp --dport 8085 -j ACCEPT
