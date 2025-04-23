@@ -22,6 +22,7 @@ Currently **UNDER THE DEVELOPMENT**.
 
 - `LAN_INTERFACE=eth3  # Your LAN-facing NIC` to be fully dynamic
 - Restart survival
+- Add firewall rules for SMB
 
 ## Project structure
 
