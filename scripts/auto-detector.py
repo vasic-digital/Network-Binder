@@ -30,7 +30,6 @@ if __name__ == "__main__":
         }
     }
     
-    # TODO: Uncomment when ready
-    # with open('/etc/netplan/01-mptcp.yaml', 'w') as f:
-    with open('01-mptcp.yaml', 'w') as f:
+    
+    with open('/etc/netplan/01-mptcp.yaml', 'w') as f:
         yaml.dump(config, f)

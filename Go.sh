@@ -1,5 +1,21 @@
 #!/bin/bash
 
+if scripts/detect-gate.sh; then
+
+    if [ -z "$LAN_GATE_INTERFACE" ]; then
+      
+        echo "ERROR: LAN_GATE_INTERFACE is not set, please check the detect-gate.sh script"
+        exit 1
+    fi
+    
+    echo "LAN_GATE_INTERFACE: $LAN_GATE_INTERFACE"
+
+else
+    
+    echo "ERROR: Failed to detect LAN gateway interface"
+    exit 1
+fi
+
 sudo apt update && \
 sudo apt install -y \
     iptables-persistent netfilter-persistent \

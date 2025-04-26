@@ -3,7 +3,9 @@ FROM ubuntu:22.04
 RUN apt update && apt install -y \
     iproute2 iperf3 mptcpd \
     dnsmasq iftop ethtool \
-    python3 python3-pip
+    python3 python3-pip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY scripts/auto-detector.py /app/
 COPY scripts/mptcp-setup.sh /app/
