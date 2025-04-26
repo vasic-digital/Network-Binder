@@ -1,6 +1,7 @@
 #!/bin/bash
 
 . ~/.bashrc
+. /etc/environment
 
 if [ -z "$LAN_GATE_MAC" ]; then
     
