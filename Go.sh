@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if ! scripts/ethernets-up.sh; then
+
+    echo "ERROR: Failed to bring up Ethernet interfaces"
+    exit 1
+fi
+
 if scripts/detect-gate.sh; then
 
     if [ -z "$LAN_GATE_INTERFACE" ]; then
