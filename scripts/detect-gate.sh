@@ -1,5 +1,8 @@
 #!/bin/bash
 
+LAN_GATE_MAC=""
+LAN_GATE_INTERFACE=""
+
 . ~/.bashrc
 . /etc/environment
 
