@@ -16,7 +16,7 @@ if [ -z "$LAN_INTERFACE" ]; then
 
     echo "No LAN interface found with MAC address '$LAN_MAC'"
     exit 1
-else
+fi
 
 export LAN_GATE_INTERFACE="$LAN_INTERFACE"
 
