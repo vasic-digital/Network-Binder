@@ -38,4 +38,13 @@ Currently **UNDER THE DEVELOPMENT**.
 ## TODOs
 
 - `LAN_INTERFACE=eth3  # Your LAN-facing NIC` to be fully dynamic
-- Restart survival
+
+## How to use
+
+- Export MAC address of your Gateway LAN ethernet:
+
+    ```bash
+    export LAN_GATE_MAC="MAC_ADDRESS"
+    ```
+
+- Execute installation script: `sh Install.sh`
