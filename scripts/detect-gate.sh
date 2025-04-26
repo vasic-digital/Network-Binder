@@ -1,6 +1,8 @@
 #!/bin/bash
 
-if [ -z "$LAN_GATE_MAC"]; then
+. ~/.bashrc
+
+if [ -z "$LAN_GATE_MAC" ]; then
     
     echo "Please set the LAN_GATE_MAC environment variable to the MAC address of the LAN gateway."
     exit 1
