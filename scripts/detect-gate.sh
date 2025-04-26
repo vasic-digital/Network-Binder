@@ -12,6 +12,8 @@ LAN_INTERFACE=$(ip link show | grep -B1 "$LAN_MAC" | awk -F': ' 'NR==1{print $2}
 if [[ -n "$LAN_INTERFACE" ]]; then
     
     echo "LAN interface detected: $LAN_INTERFACE"
+
+    export LAN_GATE_INTERFACE="$LAN_INTERFACE"
     
 else
     
