@@ -18,6 +18,12 @@ if [ -z "$LAN_INTERFACE" ]; then
     exit 1
 fi
 
+if [[ "$LAN_INTERFACE" == *"lo"* ]]; then
+    
+    echo "ERROR: The detected interface is a loopback interface, lease check the MAC address"
+    exit 1
+fi
+
 export LAN_GATE_INTERFACE="$LAN_INTERFACE"
 
 echo "LAN interface detected: $LAN_GATE_INTERFACE"
