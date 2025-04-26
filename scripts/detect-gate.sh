@@ -12,14 +12,12 @@ fi
 # Find the interface with the matching MAC address
 LAN_INTERFACE=$(ip link show | grep -B1 "$LAN_MAC" | awk -F': ' 'NR==1{print $2}')
 
-if [[ -n "$LAN_INTERFACE" ]]; then
-    
-    echo "LAN interface detected: $LAN_INTERFACE"
+if [ -z "$LAN_INTERFACE" ]; then
 
-    export LAN_GATE_INTERFACE="$LAN_INTERFACE"
-    
-else
-    
-    echo "No LAN interface found with MAC address $LAN_MAC."
+    echo "No LAN interface found with MAC address '$LAN_MAC'"
     exit 1
-fi
+else
+
+export LAN_GATE_INTERFACE="$LAN_INTERFACE"
+
+echo "LAN interface detected: $LAN_GATE_INTERFACE"
