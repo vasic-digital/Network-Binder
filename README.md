@@ -35,10 +35,6 @@ Currently **UNDER THE DEVELOPMENT**.
 # └── README.md
 ```
 
-## TODOs
-
-- `LAN_INTERFACE=eth3  # Your LAN-facing NIC` to be fully dynamic
-
 ## How to use
 
 - Export MAC address of your Gateway LAN ethernet:
