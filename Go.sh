@@ -42,24 +42,33 @@ if sudo apt update && \
     echo "Waiting for containers to start..." && sleep 10
 
     if docker exec mptcp-router ps aux | grep -q [d]nsmasq; then
+        
         echo "Verification step 1 SUCCESS - dnsmasq running"
+
     else
+        
         echo "ERROR: Verification step 1 FAILURE - dnsmasq not running"
         docker exec mptcp-router ps aux
         exit 1
     fi
 
     if docker exec mptcp-router ss -ulnp | grep -q dnsmasq; then
+        
         echo "Verification step 2 SUCCESS - dnsmasq bound to port"
+
     else
+        
         echo "ERROR: Verification step 2 FAILURE - dnsmasq not bound"
         docker exec mptcp-router ss -ulnp
         exit 1
     fi
 
     if docker exec mptcp-router ip mptcp endpoint show | grep -q subflow; then
+        
         echo "Verification step 3 SUCCESS - MPTCP active"
+
     else
+        
         echo "ERROR: Verification step 3 FAILURE - No MPTCP endpoints"
         docker exec mptcp-router ip mptcp endpoint show
         exit 1
