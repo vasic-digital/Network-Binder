@@ -15,11 +15,11 @@ services:
     restart: unless-stopped
 
   firewall:
-    image: docker.io/iptables:latest
+    image: ubuntu:20.04
     network_mode: host
     volumes:
       - ./config/firewall:/etc/iptables
-    command: ["sh", "-c", "iptables-restore < /etc/iptables/rules.v4 && sleep infinity"]
+    command: ["sh", "-c", "apt-get update && apt-get install -y iptables && iptables-restore < /etc/iptables/rules.v4 && sleep infinity"]
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
