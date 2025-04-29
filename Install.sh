@@ -1,3 +1,3 @@
 #!/bin/bash
 
-git fetch && git pull && ./sh Go.sh
+git fetch && git pull && ./Go.sh
