@@ -32,6 +32,8 @@ if sudo apt update && \
     docker-compose up -d && \
     echo "Installation has been completed"; then
 
+    echo "Waiting for containers to start ..." && sleep 10
+
     V="$(docker exec -it mptcp-router ps aux | grep dnsmasq)"
 
     if [ -z "$V" ]; then
