@@ -41,11 +41,3 @@
 -A INPUT -p tcp --dport 8085 -m recent --name qbt_webui --set
 
 COMMIT
-
-*nat
--A POSTROUTING -o eth+ -j MASQUERADE
-
--A PREROUTING -i eth3 -p tcp --dport 6881 -j DNAT --to-destination 192.168.0.100:6881
--A PREROUTING -i eth3 -p udp --dport 34197 -j DNAT --to-destination 192.168.0.100:34197
-
-COMMIT
