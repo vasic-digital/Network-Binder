@@ -4,12 +4,18 @@ ENV container docker
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update 
-RUN apt-get install -y \
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     iproute2 iperf3 mptcpd \
-    dnsmasq iftop ethtool psmisc \
-    python3 python3-pip python3-yaml \
-    netplan.io iptables
-RUN apt-get clean && \
+    dnsmasq \              
+    iftop ethtool \        
+    psmisc \               
+    python3 python3-pip python3-yaml \ 
+    netplan.io \                      
+    iptables-legacy && \              
+    update-alternatives --set iptables /usr/sbin/iptables-legacy && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 COPY scripts/ /app/
