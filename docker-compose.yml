@@ -8,7 +8,6 @@ services:
     volumes:
       - /etc/netplan:/etc/netplan
       - /sys/class/net:/sys/class/net:ro
-      - /proc/net/dev:/proc/net/dev:ro
       - ./config/mptcp:/etc/mptcp
     environment:
       - LAN_INTERFACE=${LAN_GATE_INTERFACE}
