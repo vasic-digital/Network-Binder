@@ -25,10 +25,11 @@ else
 fi
 
 sudo apt update && \
-sudo apt install -y \
+    sudo apt install -y \
     iptables-persistent netfilter-persistent \
     iftop ethtool && \
-docker-compose build && \
+    docker-compose build && \
     docker-compose up -d && \
-    docker logs mptcp-router && \
-sh scripts/start-service.sh
+    echo "Waiting for Docker containers ..." && \
+    sleep 30 && \
+    sh scripts/start-service.sh

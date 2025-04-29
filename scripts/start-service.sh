@@ -3,7 +3,7 @@
 SERVICE_NAME="mptcp-router"
 SERVICE_FILE="/etc/systemd/system/$SERVICE_NAME.service"
 
-if systemctl is-active --quiet "$SERVICE_NAME"; then
+if sudo systemctl is-active --quiet "$SERVICE_NAME"; then
     
     echo "Stopping the $SERVICE_NAME service..."
     sudo systemctl stop "$SERVICE_NAME"
