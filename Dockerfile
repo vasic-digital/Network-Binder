@@ -3,8 +3,8 @@ FROM ubuntu:22.04
 ENV container docker
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN sed -i 's|http://.*archive.ubuntu.com|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list && \
-    sed -i 's|http://.*security.ubuntu.com|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list
+# RUN sed -i 's|http://.*archive.ubuntu.com|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list && \
+#     sed -i 's|http://.*security.ubuntu.com|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list
 
 RUN apt-get update 
 
