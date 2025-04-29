@@ -32,4 +32,4 @@ sudo apt update && \
     docker-compose up -d && \
     echo "Waiting for Docker containers ..." && \
     sleep 30 && \
-    sh scripts/start-service.sh
+    ./scripts/start-service.sh
