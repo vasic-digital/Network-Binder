@@ -3,6 +3,7 @@ version: '3.8'
 services:
   mptcp-router:
     build: .
+    container_name: mptcp-router
     privileged: true
     network_mode: host
     volumes:
@@ -15,6 +16,7 @@ services:
 
   firewall:
     image: ubuntu:20.04
+    container_name: mptcp-firewall
     network_mode: host
     volumes:
       - ./config/firewall:/etc/iptables

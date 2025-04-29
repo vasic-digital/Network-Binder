@@ -24,10 +24,41 @@ else
     exit 1
 fi
 
-sudo apt update && \
+if sudo apt update && \
     sudo apt install -y \
     iptables-persistent netfilter-persistent \
     iftop ethtool && \
     docker-compose build && \
     docker-compose up -d && \
-    echo "Installation has been completed"
+    echo "Installation has been completed"; then
+
+    V="$(docker exec -it mptcp-router ps aux | grep dnsmasq)"
+
+    if [ -z "$V" ]; then
+
+        echo "ERROR: Verification step 1 FAILURE"
+        exit 1
+    fi
+
+    echo "Verification step 1 SUCCESS"
+
+    V="$(docker exec -it mptcp-router tail -f /var/log/syslog | grep dnsmasq)"
+
+    if [ -z "$V" ]; then
+
+        echo "ERROR: Verification step 2 FAILURE"
+        exit 1
+    fi
+
+    echo "Verification step 2 SUCCESS"
+
+    V="$(docker exec -it mptcp-router ip mptcp endpoint show)"
+
+    if [ -z "$V" ]; then
+
+        echo "ERROR: Verification step 3 FAILURE"
+        exit 1
+    fi
+
+    echo "Verification step 3 SUCCESS"
+fi
