@@ -30,6 +30,4 @@ sudo apt update && \
     iftop ethtool && \
     docker-compose build && \
     docker-compose up -d && \
-    echo "Waiting for Docker containers ..." && \
-    sleep 10 && \
-    ./scripts/start-service.sh
+    echo "Installation has been completed"
