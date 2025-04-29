@@ -23,9 +23,3 @@ services:
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
-
-  netmon:
-    image: nicolaka/netshoot
-    network_mode: host
-    command: ["sh", "-c", "while true; do iftop -i eth+; sleep 10; done"]
-    restart: unless-stopped
