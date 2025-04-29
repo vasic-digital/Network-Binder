@@ -13,6 +13,7 @@ services:
       - /etc/netplan:/etc/netplan
       - /sys/class/net:/sys/class/net:ro
       - ./config/mptcp:/etc/mptcp
+      - /lib/modules:/lib/modules:ro
     environment:
       - LAN_INTERFACE=${LAN_GATE_INTERFACE}
     restart: unless-stopped

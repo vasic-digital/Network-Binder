@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if ! sudo modprobe mptcp_diag && lsmod | grep mptcp; then
+
+    echo "ERROR: Could not init MPTCP kernel modules"
+    exit 1
+fi
+
 if ! scripts/ethernets-up.sh; then
 
     echo "ERROR: Failed to bring up Ethernet interfaces"
@@ -24,9 +30,12 @@ else
     exit 1
 fi
 
+# FIXME:
+# iptables-persistent
+
 if sudo apt update && \
     sudo apt install -y \
-    iptables-persistent netfilter-persistent \
+    netfilter-persistent \
     iftop ethtool && \
     ((sudo systemctl stop systemd-resolved && sudo systemctl disable systemd-resolved && sudo systemctl mask systemd-resolved && echo "systemd-resolved is off (1)") || echo "systemd-resolved is off (2)") && \
     (sudo pkill -9 dnsmasq || echo "No dnsmasq instances left") && \
