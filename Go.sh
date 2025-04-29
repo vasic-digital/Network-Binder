@@ -28,6 +28,9 @@ if sudo apt update && \
     sudo apt install -y \
     iptables-persistent netfilter-persistent \
     iftop ethtool && \
+    ((sudo systemctl stop systemd-resolved && sudo systemctl disable systemd-resolved && echo "systemd-resolved is off (1)") || echo "systemd-resolved is off (2)") && \
+    (test -e /etc/resolv.conf.backup && echo "resolv.conf.backup ok") || (sudo mv /etc/resolv.conf /etc/resolv.conf.backup && echo "resolv.conf.backup created") && \
+    echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf && \
     docker-compose build && \
     docker-compose up -d && \
     echo "Installation has been completed"; then
@@ -59,7 +62,8 @@ if sudo apt update && \
     fi    
 
     if docker exec mptcp-router ethtool "$LAN_GATE_INTERFACE" | grep "Link detected" && \
-        sudo iptables -L INPUT -nv | grep -E '67|68'; then
+        sudo iptables -L INPUT -nv | grep -E '67|68' && \
+        sudo ss -ulnp | grep ':53'; then
         echo "Verification step 4 SUCCESS - Final check"
     else
         echo "ERROR: Verification step 4 FAILURE - Final check failed"
