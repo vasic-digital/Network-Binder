@@ -16,7 +16,7 @@ services:
 
   # FIXME:
   # firewall:
-  #   image: ubuntu:20.04
+  #   image: registry.docker-cn.com/library/ubuntu:20.04
   #   container_name: mptcp-firewall
   #   network_mode: host
   #   volumes:
