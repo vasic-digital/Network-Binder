@@ -58,7 +58,8 @@ if sudo apt update && \
         exit 1
     fi    
 
-    if docker exec mptcp-router ethtool "$LAN_GATE_INTERFACE" | grep "Link detected"; then
+    if docker exec mptcp-router ethtool "$LAN_GATE_INTERFACE" | grep "Link detected" && \
+        sudo iptables -L INPUT -nv | grep -E '67|68'; then
         echo "Verification step 4 SUCCESS - Final check"
     else
         echo "ERROR: Verification step 4 FAILURE - Final check failed"
