@@ -30,7 +30,9 @@ if sudo apt update && \
     iftop ethtool && \
     ((sudo systemctl stop systemd-resolved && sudo systemctl disable systemd-resolved && sudo systemctl mask systemd-resolved && echo "systemd-resolved is off (1)") || echo "systemd-resolved is off (2)") && \
     (sudo pkill -9 dnsmasq || echo "No dnsmasq instances left") && \
+    (sudo pkill -9 unbound || echo "No unbound instances left") && \
     (sudo fuser -k 53/udp || echo "Port 53 is free") && \
+    ((sudo lsof -i :53 -t | xargs -r sudo kill -9) 2>/dev/null || echo "Port 53 is free (verified)") && \
     (test -e /etc/resolv.conf.backup && echo "resolv.conf.backup ok") || (sudo mv /etc/resolv.conf /etc/resolv.conf.backup && echo "resolv.conf.backup created") && \
     echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf && \
     docker-compose build && \

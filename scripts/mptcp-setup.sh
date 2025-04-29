@@ -13,11 +13,6 @@ if ! ip link show "$LAN_INTERFACE" >/dev/null 2>&1; then
     exit 1
 fi
 
-echo "Stopping conflicts... (if any)"
-pkill dnsmasq || true
-ss -ulpn 'sport = 53' | awk '{print $6}' | cut -d'"' -f2 | xargs -r kill || true
-sleep 2
-
 sysctl -w net.mptcp.enabled=1
 [ -f /proc/sys/net/mptcp/mptcp_path_manager ] && \
     sysctl -w net.mptcp.mptcp_path_manager=fullmesh
@@ -25,9 +20,9 @@ sysctl -w net.mptcp.enabled=1
 echo "Starting dnsmasq on '$LAN_INTERFACE' ..."
 dnsmasq \
     --log-facility=/var/log/dnsmasq.log \
+    --log-dhcp \
+    --log-queries \
     --except-interface=lo \
-    --listen-address="$(hostname -I | awk '{print $1}')" \
-    --listen-address=172.17.0.1 \
     --bind-interfaces \
     --interface="$LAN_INTERFACE" \
     --dhcp-range=192.168.0.100,192.168.0.200,24h \
