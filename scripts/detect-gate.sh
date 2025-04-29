@@ -12,20 +12,21 @@ if [ -z "$LAN_GATE_MAC" ]; then
     exit 1
 fi
 
-# Find the interface with the matching MAC address
-LAN_INTERFACE=$(ip link show | grep -B1 "$LAN_MAC" | awk -F': ' 'NR==1{print $2}')
+LAN_INTERFACE=$(ip -o link | awk -F': ' -v mac="$LAN_GATE_MAC" '$0 ~ mac {print $2}' | cut -d' ' -f1)
+
+echo "Interface: '$LAN_INTERFACE' for mac '$LAN_GATE_MAC'"
 
 if [ -z "$LAN_INTERFACE" ]; then
 
-    echo "No LAN interface found with MAC address '$LAN_MAC'"
+    echo "No LAN interface found with MAC address '$LAN_GATE_MAC'"
     exit 1
 fi
 
-if [[ "$LAN_INTERFACE" == *"lo"* ]]; then
+# if [[ "$LAN_INTERFACE" == *"lo"* ]]; then
     
-    echo "ERROR: The detected interface is a loopback interface, lease check the MAC address"
-    exit 1
-fi
+#     echo "ERROR: The detected interface is a loopback interface, lease check the MAC address"
+#     exit 1
+# fi
 
 export LAN_GATE_INTERFACE="$LAN_INTERFACE"
 
