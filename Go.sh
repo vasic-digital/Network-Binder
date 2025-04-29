@@ -67,7 +67,8 @@ if sudo apt update && \
 
     if docker exec mptcp-router ethtool "$LAN_GATE_INTERFACE" | grep "Link detected" && \
         sudo iptables -L INPUT -nv | grep -E '67|68' && \
-        docker exec mptcp-router ss -ulnp | grep dnsmasq; then
+        docker exec mptcp-router ss -ulnp | grep dnsmasq && \
+        docker exec mptcp-router iptables -t nat -L POSTROUTING -nv; then
         echo "Verification step 4 SUCCESS - Final check"
     else
         echo "ERROR: Verification step 4 FAILURE - Final check failed"
