@@ -30,7 +30,7 @@ if sudo apt update && \
     iftop ethtool && \
     ((sudo systemctl stop systemd-resolved && sudo systemctl disable systemd-resolved && echo "systemd-resolved is off (1)") || echo "systemd-resolved is off (2)") && \
     (test -e /etc/resolv.conf.backup && echo "resolv.conf.backup ok") || (sudo mv /etc/resolv.conf /etc/resolv.conf.backup && echo "resolv.conf.backup created") && \
-    echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf && \
+    sudo echo "nameserver 1.1.1.1" > /etc/resolv.conf && \
     docker-compose build && \
     docker-compose up -d && \
     echo "Installation has been completed"; then
