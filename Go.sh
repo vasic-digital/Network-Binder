@@ -32,35 +32,29 @@ if sudo apt update && \
     docker-compose up -d && \
     echo "Installation has been completed"; then
 
-    echo "Waiting for containers to start ..." && sleep 10
+    echo "Waiting for containers to start..." && sleep 10
 
-    V="$(docker exec -it mptcp-router ps aux | grep dnsmasq)"
-
-    if [ -z "$V" ]; then
-
-        echo "ERROR: Verification step 1 FAILURE"
+    if docker exec mptcp-router ps aux | grep -q [d]nsmasq; then
+        echo "Verification step 1 SUCCESS - dnsmasq running"
+    else
+        echo "ERROR: Verification step 1 FAILURE - dnsmasq not running"
+        docker exec mptcp-router ps aux
         exit 1
     fi
 
-    echo "Verification step 1 SUCCESS"
-
-    V="$(docker exec -it mptcp-router tail -f /var/log/syslog | grep dnsmasq)"
-
-    if [ -z "$V" ]; then
-
-        echo "ERROR: Verification step 2 FAILURE"
+    if docker exec mptcp-router ss -ulnp | grep -q dnsmasq; then
+        echo "Verification step 2 SUCCESS - dnsmasq bound to port"
+    else
+        echo "ERROR: Verification step 2 FAILURE - dnsmasq not bound"
+        docker exec mptcp-router ss -ulnp
         exit 1
     fi
 
-    echo "Verification step 2 SUCCESS"
-
-    V="$(docker exec -it mptcp-router ip mptcp endpoint show)"
-
-    if [ -z "$V" ]; then
-
-        echo "ERROR: Verification step 3 FAILURE"
+    if docker exec mptcp-router ip mptcp endpoint show | grep -q subflow; then
+        echo "Verification step 3 SUCCESS - MPTCP active"
+    else
+        echo "ERROR: Verification step 3 FAILURE - No MPTCP endpoints"
+        docker exec mptcp-router ip mptcp endpoint show
         exit 1
-    fi
-
-    echo "Verification step 3 SUCCESS"
+    fi    
 fi
