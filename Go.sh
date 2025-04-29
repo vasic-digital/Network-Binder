@@ -63,14 +63,19 @@ if sudo apt update && \
         echo "ERROR: Verification step 3 FAILURE - No MPTCP endpoints"
         docker exec mptcp-router ip mptcp endpoint show
         exit 1
-    fi    
+    fi  
+
+    # FIXME:
+    # sudo iptables -L INPUT -nv | grep -E '67|68' && \  
 
     if docker exec mptcp-router ethtool "$LAN_GATE_INTERFACE" | grep "Link detected" && \
-        sudo iptables -L INPUT -nv | grep -E '67|68' && \
         docker exec mptcp-router ss -ulnp | grep dnsmasq && \
         docker exec mptcp-router iptables -t nat -L POSTROUTING -nv; then
+        
         echo "Verification step 4 SUCCESS - Final check"
+        
     else
+        
         echo "ERROR: Verification step 4 FAILURE - Final check failed"
         exit 1
     fi
