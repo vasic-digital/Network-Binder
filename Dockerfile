@@ -16,6 +16,7 @@ RUN apt-get update && \
     psmisc \               
     python3 python3-pip python3-yaml \ 
     netplan.io \                      
+    linux-modules-extra-$(uname -r) \
     iptables && \              
     update-alternatives --set iptables /usr/sbin/iptables-legacy && \
     update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy && \
