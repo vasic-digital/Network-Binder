@@ -57,4 +57,11 @@ if sudo apt update && \
         docker exec mptcp-router ip mptcp endpoint show
         exit 1
     fi    
+
+    if docker exec mptcp-router ethtool "$LAN_GATE_INTERFACE" | grep "Link detected"; then
+        echo "Verification step 4 SUCCESS - Final check"
+    else
+        echo "ERROR: Verification step 4 FAILURE - Final check failed"
+        exit 1
+    fi
 fi
