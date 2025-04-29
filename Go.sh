@@ -6,7 +6,9 @@ if ! scripts/ethernets-up.sh; then
     exit 1
 fi
 
-if scripts/detect-gate.sh; then
+. scripts/detect-gate.sh
+
+if detect_gate; then
 
     if [ -z "$LAN_GATE_INTERFACE" ]; then
       

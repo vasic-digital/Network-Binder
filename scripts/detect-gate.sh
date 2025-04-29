@@ -1,33 +1,38 @@
 #!/bin/bash
 
-LAN_GATE_MAC=""
-LAN_GATE_INTERFACE=""
+detect_gate() {
 
-. ~/.bashrc
-. /etc/environment
+    LAN_GATE_MAC=""
+    LAN_GATE_INTERFACE=""
 
-if [ -z "$LAN_GATE_MAC" ]; then
-    
-    echo "Please set the LAN_GATE_MAC environment variable to the MAC address of the LAN gateway."
-    exit 1
-fi
+    . ~/.bashrc
+    . /etc/environment
 
-LAN_INTERFACE=$(ip -o link | awk -F': ' -v mac="$LAN_GATE_MAC" '$0 ~ mac {print $2}' | cut -d' ' -f1)
+    if [ -z "$LAN_GATE_MAC" ]; then
+        
+        echo "Please set the LAN_GATE_MAC environment variable to the MAC address of the LAN gateway."
+        exit 1
+    fi
 
-echo "Interface: '$LAN_INTERFACE' for mac '$LAN_GATE_MAC'"
+    LAN_INTERFACE=$(ip -o link | awk -F': ' -v mac="$LAN_GATE_MAC" '$0 ~ mac {print $2}' | cut -d' ' -f1)
 
-if [ -z "$LAN_INTERFACE" ]; then
+    echo "Interface: '$LAN_INTERFACE' for mac '$LAN_GATE_MAC'"
 
-    echo "No LAN interface found with MAC address '$LAN_GATE_MAC'"
-    exit 1
-fi
+    if [ -z "$LAN_INTERFACE" ]; then
 
-if echo "$LAN_INTERFACE" | grep "lo"; then
-    
-    echo "ERROR: The detected interface is a loopback interface, lease check the MAC address"
-    exit 1
-fi
+        echo "No LAN interface found with MAC address '$LAN_GATE_MAC'"
+        exit 1
+    fi
 
-export LAN_GATE_INTERFACE="$LAN_INTERFACE"
+    if echo "$LAN_INTERFACE" | grep "lo"; then
+        
+        echo "ERROR: The detected interface is a loopback interface, lease check the MAC address"
+        exit 1
+    fi
 
-echo "LAN interface detected: '$LAN_GATE_INTERFACE'"
+    export LAN_GATE_INTERFACE="$LAN_INTERFACE"
+
+    echo "LAN interface detected: '$LAN_GATE_INTERFACE'"
+}
+
+
