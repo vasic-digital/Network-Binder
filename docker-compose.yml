@@ -1,5 +1,10 @@
 version: '3.8'
 
+networks:
+  default:
+    driver: bridge
+    enable_ip_masquerade: false
+
 services:
   mptcp-router:
     build: .
@@ -14,13 +19,14 @@ services:
       - LAN_INTERFACE=${LAN_GATE_INTERFACE}
     restart: unless-stopped
 
-  firewall:
-    image: ubuntu:20.04
-    container_name: mptcp-firewall
-    network_mode: host
-    volumes:
-      - ./config/firewall:/etc/iptables
-    command: ["sh", "-c", "apt-get update && apt-get install -y iptables && iptables-restore < /etc/iptables/rules.v4 && sleep infinity"]
-    cap_add:
-      - NET_ADMIN
-    restart: unless-stopped
+  # FIXME:
+  # firewall:
+  #   image: ubuntu:20.04
+  #   container_name: mptcp-firewall
+  #   network_mode: host
+  #   volumes:
+  #     - ./config/firewall:/etc/iptables
+  #   command: ["sh", "-c", "apt-get update && apt-get install -y iptables && iptables-restore < /etc/iptables/rules.v4 && sleep infinity"]
+  #   cap_add:
+  #     - NET_ADMIN
+  #   restart: unless-stopped

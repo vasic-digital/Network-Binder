@@ -41,6 +41,17 @@ if ! ps -p $! >/dev/null; then
     exit 1
 fi
 
-echo "MPTCP router is running"
+if iptables -t nat -F && \
+    iptables -t nat -A POSTROUTING -o eth+ -j MASQUERADE && \
+    iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE && \
+    iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE && \
+    iptables -t nat -L POSTROUTING -n -v; then
+
+    echo "MPTCP router is running";
+
+else
+
+    echo "ERROR: NAT setup failed"
+fi
 
 tail -f /var/log/dnsmasq.log
