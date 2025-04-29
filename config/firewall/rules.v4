@@ -24,8 +24,8 @@
 -A INPUT -p tcp --match multiport --dports 6881:6891 -j ACCEPT
 -A INPUT -p udp --match multiport --dports 6881:6891 -j ACCEPT
 
--A INPUT -p udp --dport 34197 -j ACCEPT  # Typical DHT port
--A INPUT -p udp --dport 10000:60000 -j ACCEPT  # Broad UDP range for uTP
+-A INPUT -p udp --dport 34197 -j ACCEPT
+-A INPUT -p udp --dport 10000:60000 -j ACCEPT
 
 -A INPUT -p tcp --match multiport --dports 3128,9666 -j ACCEPT
 
