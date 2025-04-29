@@ -16,11 +16,13 @@ sysctl -w net.mptcp.enabled=1
 
 WAN_INTERFACES=()
 
+# FIXME: No interfaces has been found
 for iface in $(ip link show | grep -E 'eth[0-9]|enp[0-9]s[0-9]' | awk -F': ' '{print $2}' | grep -v "$LAN_INTERFACE"); do
 
     WAN_INTERFACES+=("$iface")
 done
 
+# FIXME: No interfaces has been found
 if [ -z "$WAN_INTERFACES" ]; then
 
     echo "ERROR: No WAN_INTERFACES"
