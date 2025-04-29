@@ -23,7 +23,10 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 
 # 5. Start dnsmasq (with strict interface binding)
 echo "Starting dnsmasq..."
+mkdir -p /var/log && \
 dnsmasq \
+    --log-facility=/var/log/dnsmasq.log \
+    --log-queries \
     --bind-interfaces \
     --interface="$LAN_INTERFACE" \
     --dhcp-range=192.168.0.100,192.168.0.200,24h \
@@ -33,10 +36,13 @@ dnsmasq \
 
 # 6. Verify dnsmasq is running
 sleep 2
+
 if ! ps -aux | grep -v grep | grep dnsmasq; then
+    
     echo "ERROR: dnsmasq failed to start"
     exit 1
 fi
 
 echo "MPTCP router is running"
-while true; do sleep 3600; done
+
+tail -f /var/log/dnsmasq.log
