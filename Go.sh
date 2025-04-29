@@ -28,7 +28,9 @@ if sudo apt update && \
     sudo apt install -y \
     iptables-persistent netfilter-persistent \
     iftop ethtool && \
-    ((sudo systemctl stop systemd-resolved && sudo systemctl disable systemd-resolved && echo "systemd-resolved is off (1)") || echo "systemd-resolved is off (2)") && \
+    ((sudo systemctl stop systemd-resolved && sudo systemctl disable systemd-resolved && sudo systemctl mask systemd-resolved && echo "systemd-resolved is off (1)") || echo "systemd-resolved is off (2)") && \
+    (sudo pkill -9 dnsmasq || echo "No dnsmasq instances left") && \
+    (sudo fuser -k 53/udp || echo "Port 53 is free") && \
     (test -e /etc/resolv.conf.backup && echo "resolv.conf.backup ok") || (sudo mv /etc/resolv.conf /etc/resolv.conf.backup && echo "resolv.conf.backup created") && \
     echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf && \
     docker-compose build && \

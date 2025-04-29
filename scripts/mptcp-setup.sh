@@ -25,7 +25,9 @@ sysctl -w net.mptcp.enabled=1
 echo "Starting dnsmasq on '$LAN_INTERFACE' ..."
 dnsmasq \
     --log-facility=/var/log/dnsmasq.log \
-    --listen-address=0.0.0.0 \
+    --except-interface=lo \
+    --listen-address="$(hostname -I | awk '{print $1}')" \
+    --listen-address=172.17.0.1 \
     --bind-interfaces \
     --interface="$LAN_INTERFACE" \
     --dhcp-range=192.168.0.100,192.168.0.200,24h \
