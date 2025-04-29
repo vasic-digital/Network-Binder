@@ -45,7 +45,10 @@ if iptables -t nat -F && \
     iptables -t nat -A POSTROUTING -o eth+ -j MASQUERADE && \
     iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE && \
     iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE && \
-    iptables -t nat -L POSTROUTING -n -v; then
+    iptables -t nat -L POSTROUTING -n -v && \
+    iptables -t nat -F POSTROUTING && \
+    iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -o eth+ -j MASQUERADE && \
+    iptables -t nat -L POSTROUTING -nv; then
 
     echo "MPTCP router is running";
 
