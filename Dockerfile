@@ -7,7 +7,7 @@ COPY scripts/ /app/
 
 RUN apt update && apt install -y \
     iproute2 iperf3 mptcpd \
-    dnsmasq iftop ethtool \
+    dnsmasq iftop ethtool psmisc \
     python3 python3-pip python3-yaml \
     netplan.io iptables && \
     apt-get clean && \
