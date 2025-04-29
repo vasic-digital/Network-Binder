@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
 
   firewall:
-    image: alpine/iptables
+    image: docker.io/iptables:latest
     network_mode: host
     volumes:
       - ./config/firewall:/etc/iptables
