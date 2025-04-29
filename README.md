@@ -5,10 +5,7 @@ Bind multiple internet connection endpoints using the Multipath TCP (mptcp).
 A **production-ready MPTCP router** with:
 
 ✅ Automatic multi-WAN detection  
-✅ Secure Docker integration  
-✅ Optimized traffic bonding  
-✅ Real-time monitoring  
-✅ Self-healing firewall
+✅ Secure Docker integration   
 
 ## Project status
 
@@ -26,4 +23,4 @@ Currently **UNDER THE DEVELOPMENT**.
     export LAN_GATE_MAC="MAC_ADDRESS"
     ```
 
-- Execute installation script: `sh Install.sh`
+- Execute installation script: `./Install.sh`
