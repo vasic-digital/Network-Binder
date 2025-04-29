@@ -31,5 +31,5 @@ sudo apt update && \
     docker-compose build && \
     docker-compose up -d && \
     echo "Waiting for Docker containers ..." && \
-    sleep 30 && \
+    sleep 10 && \
     ./scripts/start-service.sh
